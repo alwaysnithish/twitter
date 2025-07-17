@@ -1,0 +1,20 @@
+# Web framework
+Django>=4.2,<5.0
+
+# WSGI server for deployment
+gunicorn>=21.2
+
+# Downloader backend for videos (Twitter, etc.)
+yt-dlp>=2024.5.27
+
+# For making HTTP requests to stream videos
+requests>=2.31
+
+# Optional: Used if you serve static files in production
+whitenoise>=6.6
+
+# Optional: For environment variable management
+python-decouple>=3.8
+
+# Optional: PostgreSQL database support (if you're using PostgreSQL on Render)
+psycopg2-binary>=2.9
