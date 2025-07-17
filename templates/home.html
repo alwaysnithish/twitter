@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter/X Video Downloader - 21K Tools</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #1a1a1a;
+        }
+
+        /* Header Styles from second template */
+        .header {
+            background: white;
+            box-shadow: 0 4px 20px rgba(30, 64, 175, 0.3);
+            position: sticky; 
+            top: 0; 
+            z-index: 1000;
+        }
+        
+        .header-container {
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0 20px;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: 800;
+            text-decoration: none;
+            color: #2563eb;
+            gap:8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 102px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .header-actions-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 0px 10px;
+            gap: 10px;
+        }
+        
+        .search-box {
+            position: relative; 
+            flex-grow: 1;
+            max-width: 700px;
+            width:100%;
+            margin: 0 auto;
+        }
+        
+        .search-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            border-radius: 30px;
+            padding: 12px 50px 12px 20px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        .mobileToggle {
+            cursor: pointer;
+            padding: 10px;
+            display: none;
+        }
+        
+        .bar1, .bar2, .bar3 {
+            width: 23px; 
+            height: 2px; 
+            background-color: #1e3a8a;
+            margin: 6px 0; 
+            transition: 0.4s;
+        }
+        
+        .change .bar1 { transform: translate(0, 8px) rotate(-45deg); }
+        .change .bar2 { opacity: 0; }
+        .change .bar3 { transform: translate(0, -8px) rotate(45deg); }
+
+        .nav-menu {
+            display: flex; 
+            gap: 10px; 
+            margin-top: 15px; 
+            padding-bottom: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .nav-link {
+            color: #1e40af;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background: rgba(59, 130, 246, 0.2);
+            color: #1e40af;
+        }
+
+        .mobile-panel {
+            display: none; 
+            flex-direction: column; 
+            gap: 15px;
+            background: white; 
+            padding: 20px; 
+            position: absolute;
+            top: 100%; 
+            left: 0; 
+            width: 100%;
+            animation: slideDown 0.4s ease-in-out;
+            z-index: 999;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-panel.show { display: flex; }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            padding: 40px 20px; 
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .tool-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #2563eb;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .tool-subtitle {
+            font-size: 1.2rem;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        .feature-badges {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .feature-badge {
+            background: rgba(59, 130, 246, 0.1);
+            color: #2563eb;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .url-input-section {
+            margin-bottom: 30px;
+        }
+
+        .input-label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .url-input-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .url-input {
+            width: 100%;
+            padding: 16px 80px 16px 20px;
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            border-radius: 15px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .url-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        /* New input action buttons */
+        .input-actions {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 5px;
+        }
+
+        .input-action-btn {
+            background: transparent;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .input-action-btn:hover {
+            background: rgba(59, 130, 246, 0.1);
+            color: #2563eb;
+        }
+
+        .analyze-btn {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        .analyze-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .qualities-section {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .qualities-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .quality-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(59, 130, 246, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .quality-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+        }
+
+        .quality-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .quality-main {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .quality-badge {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .quality-details {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .quality-detail {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .download-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .success-message {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #16a34a;
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .video-info {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .video-info h3 {
+            color: #1f2937;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .video-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cookies-status {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            color: #059669;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .cookies-status.error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #dc2626;
+        }
+
+        .download-progress {
+            display: none;
+            margin-top: 15px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        /* Footer Styles from second template */
+        .footer {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: white; 
+            margin-top: 60px;
+        }
+        
+        .footer-container {
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 50px 20px 20px;
+        }
+        
+        .footer-content {
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px; 
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h3 {
+            color: #60a5fa; 
+            font-size: 18px; 
+            font-weight: 600; 
+            margin-bottom: 20px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8); 
+            text-decoration: none; 
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover { 
+            color: #60a5fa; 
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 0; 
+            display: flex; 
+            justify-content: space-between;
+            align-items: center; 
+            flex-wrap: wrap; 
+            gap: 15px;
+        }
+        
+        .footer-brand {
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+        }
+        
+        .footer-brand-icon {
+            width: 38px; 
+            height: 38px; 
+            background: #3b82f6;
+            border-radius: 20px; 
+            display: flex; 
+            align-items: center;
+            justify-content: center; 
+            font-weight: bold;
+        }
+        
+        .social-links {
+            display: flex; 
+            gap: 15px;
+        }
+        
+        .social-link {
+            width: 40px; 
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%; 
+            display: flex;
+            align-items: center; 
+            justify-content: center;
+            color: white; 
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: #3b82f6; 
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .tool-title {
+                font-size: 2rem;
+            }
+
+            .quality-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .quality-details {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .download-btn {
+                width: 100%;
+            }
+
+            .mobileToggle {
+                display: block;
+            }
+            
+            .nav-menu { 
+                display: none; 
+            }
+            
+            .footer-bottom { 
+                flex-direction: column; 
+                text-align: center; 
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-container, .footer-container {
+                padding-left: 15px; 
+                padding-right: 15px;
+            }
+            
+            .search-input { 
+                min-width: 150px; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header from second template -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-container">
+                <a href="/" class="logo">
+                    <div class="logo-icon">21K</div>
+                    <span>Tools</span>
+                </a>
+            </div>
+            
+            <div class="header-actions-container">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search tools...">
+                    <button class="search-btn">🔍</button>
+                </div>
+                <div class="mobileToggle" id="mobileToggle">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </div>
+            </div>
+            
+            <nav class="header-nav">
+                <div class="nav-menu">
+                    <a href="https://21k.tools" class="nav-link">🏠 Home</a>
+                    <a href="https://video.21k.tools" class="nav-link">🎥 Video Tools</a>
+                    <a href="https://image.21k.tools" class="nav-link">🖼️ Image Tools</a>
+                    <a href="https://pdf.21k.tools" class="nav-link">📄 PDF Tools</a>
+                    <a href="https://audio.21k.tools" class="nav-link">🎵 Audio Tools</a>
+                    <a href="https://text.21k.tools" class="nav-link">📝 Text Tools</a>
+                    <a href="https://dev.21k.tools" class="nav-link">💻 Dev Tools</a>
+                </div>
+            </nav>
+            
+            <div class="mobile-panel" id="mobilePanel">
+                <a href="https://21k.tools" class="nav-link">🏠 Home</a>
+                <a href="https://video.21k.tools" class="nav-link">🎥 Video Tools</a>
+                <a href="https://image.21k.tools" class="nav-link">🖼️ Image Tools</a>
+                <a href="https://pdf.21k.tools" class="nav-link">📄 PDF Tools</a>
+                <a href="https://audio.21k.tools" class="nav-link">🎵 Audio Tools</a>
+                    <a href="https://text.21k.tools" class="nav-link">📝 Text Tools</a>
+                    <a href="https://dev.21k.tools" class="nav-link">💻 Dev Tools</a>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="container">
+                <div class="header-section">
+                    <h1 class="tool-title">📱 Twitter/X Video Downloader</h1>
+                    <p class="tool-subtitle">Download high-quality videos from Twitter/X instantly</p>
+                    <div class="feature-badges">
+                        <span class="feature-badge">🚀 No Limits</span>
+                        <span class="feature-badge">🔒 No Blocking</span>
+                        <span class="feature-badge">📊 Top 3 Qualities</span>
+                        <span class="feature-badge">⚡ Instant Download</span>
+                    </div>
+                </div>
+
+                <div class="cookies-status" id="cookiesStatus">
+                    🍪 Cookies loaded successfully - Ready for downloads!
+                </div>
+
+                <div class="url-input-section">
+                    <label class="input-label">Enter Twitter/X Video URL:</label>
+                    <div class="url-input-container">
+                        <input type="url" 
+                               class="url-input" 
+                               id="urlInput" 
+                               placeholder="https://twitter.com/username/status/1234567890 or https://x.com/username/status/1234567890"
+                               autocomplete="off">
+                        <div class="input-actions">
+                            <button class="input-action-btn" id="pasteBtn" title="Paste">📋</button>
+                            <button class="input-action-btn" id="clearBtn" title="Clear">✕</button>
+                        </div>
+                    </div>
+                    <button class="analyze-btn" id="analyzeBtn">
+                        🔍 Analyze Video
+                    </button>
+                </div>
+
+                <div class="loading-spinner" id="loadingSpinner">
+                    <div class="spinner"></div>
+                    <p>Analyzing video... Please wait</p>
+                </div>
+
+                <div class="error-message" id="errorMessage"></div>
+                <div class="success-message" id="successMessage"></div>
+
+                <div class="video-info" id="videoInfo">
+                    <h3>📹 Video Information</h3>
+                    <div class="video-meta">
+                        <div class="meta-item">
+                            <span>👤</span>
+                            <span id="videoUploader">Unknown</span>
+                        </div>
+                        <div class="meta-item">
+                            <span>⏱️</span>
+                            <span id="videoDuration">Unknown</span>
+                        </div>
+                        <div class="meta-item">
+                            <span>👁️</span>
+                            <span id="videoViews">Unknown</span>
+                        </div>
+                        <div class="meta-item">
+                            <span>❤️</span>
+                            <span id="videoLikes">Unknown</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qualities-section" id="qualitiesSection">
+                    <h2 class="qualities-title">📊 Available Qualities (Top 3)</h2>
+                    <div id="qualitiesList"></div>
+                </div>
+
+                <div class="download-progress" id="downloadProgress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">Preparing download...</div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer from second template -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>Popular Tools</h3>
+                        <ul class="footer-links">
+                            <li><a href="https://video.21k.tools/downloader">Video Downloader</a></li>
+                            <li><a href="https://image.21k.tools/resize">Image Resizer</a></li>
+                            <li><a href="https://pdf.21k.tools/merge">PDF Merger</a></li>
+                            <li><a href="https://audio.21k.tools/converter">Audio Converter</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Categories</h3>
+                        <ul class="footer-links">
+                            <li><a href="https://video.21k.tools">Video Tools</a></li>
+                            <li><a href="https://image.21k.tools">Image Tools</a></li>
+                            <li><a href="https://pdf.21k.tools">PDF Tools</a></li>
+                            <li><a href="https://audio.21k.tools">Audio Tools</a></li>
+                            <li><a href="https://text.21k.tools">Text Tools</a></li>
+                            <li><a href="https://dev.21k.tools">Developer Tools</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Support</h3>
+                        <ul class="footer-links">
+                            <li><a href="/help">Help Center</a></li>
+                            <li><a href="/contact">Contact Us</a></li>
+                            <li><a href="/api">API Documentation</a></li>
+                            <li><a href="/status">Server Status</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Company</h3>
+                        <ul class="footer-links">
+                            <li><a href="/about">About Us</a></li>
+                            <li><a href="/privacy">Privacy Policy</a></li>
+                            <li><a href="/terms">Terms of Service</a></li>
+                            <li><a href="/blog">Blog</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <div class="footer-brand">
+                        <div class="footer-brand-icon">21K</div>
+                        <span>&copy; 2025 21K Tools. All rights reserved.</span>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="Twitter">🐦</a>
+                        <a href="#" class="social-link" title="Facebook">📘</a>
+                        <a href="#" class="social-link" title="LinkedIn">💼</a>
+                        <a href="#" class="social-link" title="GitHub">🐙</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            class TwitterVideoDownloader {
+                constructor() {
+                    this.currentUrl = '';
+                    this.qualities = [];
+                    this.csrfToken = null;
+                    this.initializeElements();
+                    this.attachEventListeners();
+                    this.getCsrfToken();
+                    this.checkCookiesStatus();
+                }
+
+                initializeElements() {
+                    this.urlInput = document.getElementById('urlInput');
+                    this.analyzeBtn = document.getElementById('analyzeBtn');
+                    this.loadingSpinner = document.getElementById('loadingSpinner');
+                    this.errorMessage = document.getElementById('errorMessage');
+                    this.successMessage = document.getElementById('successMessage');
+                    this.qualitiesSection = document.getElementById('qualitiesSection');
+                    this.qualitiesList = document.getElementById('qualitiesList');
+                    this.videoInfo = document.getElementById('videoInfo');
+                    this.cookiesStatus = document.getElementById('cookiesStatus');
+                    this.downloadProgress = document.getElementById('downloadProgress');
+                    this.progressFill = document.getElementById('progressFill');
+                    this.progressText = document.getElementById('progressText');
+                    this.pasteBtn = document.getElementById('pasteBtn');
+                    this.clearBtn = document.getElementById('clearBtn');
+                }
+
+                attachEventListeners() {
+                    this.analyzeBtn.addEventListener('click', () => this.analyzeVideo());
+                    this.urlInput.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') this.analyzeVideo();
+                    });
+                    this.urlInput.addEventListener('input', () => {
+                        this.hideMessages();
+                        this.qualitiesSection.style.display = 'none';
+                        this.videoInfo.style.display = 'none';
+                    });
+                    
+                    // New event listeners for paste and clear buttons
+                    this.pasteBtn.addEventListener('click', async () => {
+                        try {
+                            const text = await navigator.clipboard.readText();
+                            if (text) {
+                                this.urlInput.value = text;
+                                this.hideMessages();
+                            }
+                        } catch (err) {
+                            console.error('Failed to read clipboard contents: ', err);
+                        }
+                    });
+                    
+                    this.clearBtn.addEventListener('click', () => {
+                        this.urlInput.value = '';
+                        this.urlInput.focus();
+                        this.hideMessages();
+                        this.qualitiesSection.style.display = 'none';
+                        this.videoInfo.style.display = 'none';
+                    });
+                }
+
+                async getCsrfToken() {
+                    try {
+                        const response = await fetch('/get-csrf-token/', {
+                            method: 'GET',
+                            credentials: 'same-origin'
+                        });
+                        const data = await response.json();
+                        this.csrfToken = data.csrf_token;
+                    } catch (error) {
+                        console.warn('Could not get CSRF token:', error);
+                        // Try to get from cookie as fallback
+                        this.csrfToken = this.getCsrfTokenFromCookie();
+                    }
+                }
+
+                getCsrfTokenFromCookie() {
+                    const name = 'csrftoken';
+                    let cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        const cookies = document.cookie.split(';');
+                        for (let i = 0; i < cookies.length; i++) {
+                            const cookie = cookies[i].trim();
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+
+                getHeaders() {
+                    const headers = {
+                        'Content-Type': 'application/json',
+                    };
+                    
+                    // Add CSRF token if available
+                    if (this.csrfToken) {
+                        headers['X-CSRFToken'] = this.csrfToken;
+                    }
+                    
+                    return headers;
+                }
+
+                async checkCookiesStatus() {
+                    try {
+                        const response = await fetch('/cookies-status/', {
+                            credentials: 'same-origin'
+                        });
+                        const data = await response.json();
+                        
+                        if (data.cookies_exists && data.cookies_size > 0) {
+                            this.cookiesStatus.textContent = '🍪 Cookies loaded successfully - Ready for downloads!';
+                            this.cookiesStatus.className = 'cookies-status';
+                        } else {
+                            this.cookiesStatus.textContent = '⚠️ No cookies found - Some videos may not be accessible';
+                            this.cookiesStatus.className = 'cookies-status error';
+                        }
+                    } catch (error) {
+                        this.cookiesStatus.textContent = '❌ Error checking cookies status';
+                        this.cookiesStatus.className = 'cookies-status error';
+                    }
+                }
+
+                async analyzeVideo() {
+                    const url = this.urlInput.value.trim();
+                    
+                    if (!url) {
+                        this.showError('Please enter a valid Twitter/X URL');
+                        return;
+                    }
+
+                    if (!this.isValidTwitterUrl(url)) {
+                        this.showError('Please enter a valid Twitter/X URL');
+                        return;
+                    }
+
+                    this.showLoading();
+                    this.hideMessages();
+                    this.qualitiesSection.style.display = 'none';
+                    this.videoInfo.style.display = 'none';
+
+                    try {
+                        const response = await fetch('/', {
+                            method: 'POST',
+                            headers: this.getHeaders(),
+                            credentials: 'same-origin',
+                            body: JSON.stringify({ url: url })
+                        });
+
+                        const data = await response.json();
+
+                        if (response.ok && data.success) {
+                            this.currentUrl = url;
+                            this.qualities = data.qualities;
+                            this.displayQualities();
+                            this.loadVideoInfo();
+                            this.showSuccess('Video analyzed successfully! Select a quality to download.');
+                        } else {
+                            this.showError(data.error || 'Failed to analyze video');
+                        }
+                    } catch (error) {
+                        this.showError('Network error. Please try again.');
+                    } finally {
+                        this.hideLoading();
+                    }
+                }
+
+                async loadVideoInfo() {
+                    try {
+                        const response = await fetch(`/video-info/?url=${encodeURIComponent(this.currentUrl)}`, {
+                            credentials: 'same-origin'
+                        });
+                        const data = await response.json();
+                        
+                        if (response.ok) {
+                            document.getElementById('videoUploader').textContent = data.uploader || 'Unknown';
+                            document.getElementById('videoDuration').textContent = this.formatDuration(data.duration);
+                            document.getElementById('videoViews').textContent = this.formatNumber(data.view_count);
+                            document.getElementById('videoLikes').textContent = this.formatNumber(data.like_count);
+                            this.videoInfo.style.display = 'block';
+                        }
+                    } catch (error) {
+                        console.warn('Could not load video info:', error);
+                    }
+                }
+
+                displayQualities() {
+                    this.qualitiesList.innerHTML = '';
+                    
+                    this.qualities.forEach(quality => {
+                        const qualityCard = document.createElement('div');
+                        qualityCard.className = 'quality-card';
+                        
+                        const fileSize = this.formatFilesize(quality.filesize);
+                        
+                        qualityCard.innerHTML = `
+                            <div class="quality-info">
+                                <div class="quality-main">
+                                    <div class="quality-badge">${quality.quality}</div>
+                                    <div class="quality-details">
+                                        <div class="quality-detail">
+                                            <span>📐</span><span>${quality.width}x${quality.height}</span>
+                                        </div>
+                                        <div class="quality-detail">
+                                            <span>📁</span><span>${fileSize}</span>
+                                        </div>
+                                        <div class="quality-detail">
+                                            <span>🎬</span><span>${quality.fps} FPS</span>
+                                        </div>
+                                        <div class="quality-detail">
+                                            <span>📄</span><span>${quality.ext.toUpperCase()}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="download-btn" data-quality='${JSON.stringify(quality)}'>Download</button>
+                            </div>
+                        `;
+                        
+                        const downloadBtn = qualityCard.querySelector('.download-btn');
+                        downloadBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const qualityData = JSON.parse(e.target.dataset.quality);
+                            this.downloadVideo(qualityData);
+                        });
+                        
+                        this.qualitiesList.appendChild(qualityCard);
+                    });
+                    
+                    this.qualitiesSection.style.display = 'block';
+                }
+
+                async downloadVideo(quality) {
+                    const downloadBtn = event.target;
+                    const originalText = downloadBtn.textContent;
+                    
+                    downloadBtn.disabled = true;
+                    downloadBtn.textContent = '⏳ Downloading...';
+                    
+                    this.showDownloadProgress('Starting download...');
+                    
+                    try {
+                        const response = await fetch('/download-video-stream/', {
+                            method: 'POST',
+                            headers: this.getHeaders(),
+                            credentials: 'same-origin',
+                            body: JSON.stringify({
+                                direct_url: quality.direct_url,
+                                quality: quality.quality,
+                            }),
+                        });
+                        
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            throw new Error(errorData.error || 'Download failed on the server.');
+                        }
+                        
+                        // Handle the file stream from the server
+                        const blob = await response.blob();
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.style.display = 'none';
+                        a.href = url;
+                        a.download = `twitter_video_${quality.quality}.mp4`;
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        a.remove();
+                        
+                        this.hideDownloadProgress();
+                        this.showSuccess(`Download for ${quality.quality} started!`);
+                        
+                    } catch (error) {
+                        this.hideDownloadProgress();
+                        this.showError(error.message || 'An error occurred during download.');
+                    } finally {
+                        downloadBtn.disabled = false;
+                        downloadBtn.textContent = originalText;
+                    }
+                }
+
+                formatFilesize(bytes) {
+                    if (!bytes || bytes === 0) return 'Unknown Size';
+                    const i = Math.floor(Math.log(bytes) / Math.log(1024));
+                    return `${(bytes / Math.pow(1024, i)).toFixed(1)} ${['B', 'KB', 'MB', 'GB'][i]}`;
+                }
+
+                showDownloadProgress(message) {
+                    this.downloadProgress.style.display = 'block';
+                    this.progressText.textContent = message;
+                    this.progressFill.style.width = '30%';
+                }
+
+                hideDownloadProgress() {
+                    this.progressFill.style.width = '100%';
+                    this.progressText.textContent = 'Download complete!';
+                    setTimeout(() => {
+                        this.downloadProgress.style.display = 'none';
+                        this.progressFill.style.width = '0%';
+                    }, 2000);
+                }
+
+                isValidTwitterUrl(url) {
+                    const patterns = [
+                        /^https?:\/\/(www\.)?(twitter\.com|x\.com)\/.+\/status\/\d+/,
+                        /^https?:\/\/(www\.)?(twitter\.com|x\.com)\/.+/
+                    ];
+                    return patterns.some(pattern => pattern.test(url));
+                }
+
+                formatDuration(seconds) {
+                    if (!seconds) return 'Unknown';
+                    const mins = Math.floor(seconds / 60);
+                    const secs = seconds % 60;
+                    return `${mins}:${secs.toString().padStart(2, '0')}`;
+                }
+
+                formatNumber(num) {
+                    if (!num) return '0';
+                    if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+                    if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+                    return num.toString();
+                }
+
+                showLoading() {
+                    this.loadingSpinner.style.display = 'block';
+                    this.analyzeBtn.disabled = true;
+                    this.analyzeBtn.textContent = '🔍 Analyzing...';
+                }
+
+                hideLoading() {
+                    this.loadingSpinner.style.display = 'none';
+                    this.analyzeBtn.disabled = false;
+                    this.analyzeBtn.textContent = '🔍 Analyze Video';
+                }
+
+                showError(message) {
+                    this.errorMessage.textContent = message;
+                    this.errorMessage.style.display = 'block';
+                    this.successMessage.style.display = 'none';
+                }
+
+                showSuccess(message) {
+                    this.successMessage.textContent = message;
+                    this.successMessage.style.display = 'block';
+                    this.errorMessage.style.display = 'none';
+                }
+
+                hideMessages() {
+                    this.errorMessage.style.display = 'none';
+                    this.successMessage.style.display = 'none';
+                }
+            }
+
+            // Initialize the downloader
+            const downloader = new TwitterVideoDownloader();
+
+            // Mobile menu toggle from second template
+            document.addEventListener("DOMContentLoaded", () => {
+                const mobileToggle = document.getElementById('mobileToggle');
+                const mobilePanel = document.getElementById('mobilePanel');
+                
+                mobileToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    mobileToggle.classList.toggle('change');
+                    mobilePanel.classList.toggle('show');
+                });
+                
+                document.addEventListener('click', () => {
+                    mobileToggle.classList.remove('change');
+                    mobilePanel.classList.remove('show');
+                });
+                
+                mobilePanel.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+                
+                document.querySelectorAll(".nav-link").forEach(link => {
+                    if (location.href.includes(link.href.replace('https://', '').split('/')[0])) {
+                        link.classList.add("active");
+                    }
+                });
+                
+                const searchInput = document.querySelector('.search-input');
+                const searchBtn = document.querySelector('.search-btn');
+                
+                const performSearch = () => {
+                    const query = searchInput.value.trim();
+                    if (query) {
+                        window.location.href = `https://21k.tools/search?q=${encodeURIComponent(query)}`;
+                    }
+                };
+                
+                searchInput.addEventListener('keypress', e => {
+                    if (e.key === 'Enter') performSearch();
+                });
+                
+                searchBtn.addEventListener('click', performSearch);
+            });
+        </script>
+    </body>
+</html>
