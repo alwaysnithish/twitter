@@ -21,6 +21,8 @@ urlpatterns = [
     # Video info endpoint - gets additional video metadata
     path('video_info/', views.video_info, name='video_info'),
     re_path(r'^sitemap\.xml$', serve, {'document_root': settings.STATIC_ROOT, 'path': 'sitemap.xml'}),   
+    re_path(r'^robots\.txt$', serve, {'document_root': settings.STATIC_ROOT, 'path': 'robots.txt'}),   
+    
 ]
 
 if settings.DEBUG:
