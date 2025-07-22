@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /cookies-status/
+Disallow: /get-csrf-token/
